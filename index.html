@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NW Cleaning Services - Professional House Cleaning</title>
+  <style>
+    /* Paleta de cores exata do relatório */
+    :root {
+      --primary: #F275F2;
+      --secondary: #8065D0;
+      --accent: #20B9F8;
+      --support: #D2C0F0;
+      --neutral-dark: #405176;
+      --background: #F6F5FD;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--background);
+      color: var(--neutral-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(242, 117, 242, 0.3);
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: 1.3em;
+      opacity: 0.95;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 50px;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--secondary);
+      font-size: 2em;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    /* Serviços - Lista interativa */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      list-style: none;
+    }
+
+    .service-item {
+      background: var(--support);
+      padding: 25px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-item::before {
+      content: '💧';
+      font-size: 2em;
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    .service-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(242, 117, 242, 0.3);
+      border-color: var(--primary);
+    }
+
+    .service-item h3 {
+      color: var(--secondary);
+      margin-bottom: 10px;
+    }
+
+    /* Modal de detalhes */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 30px;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 15px;
+      position: relative;
+      animation: slideIn 0.3s ease;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .close:hover {
+      background: var(--secondary);
+    }
+
+    /* Formulário de contato */
+    form {
+      display: grid;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--neutral-dark);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid var(--support);
+      border-radius: 10px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(242, 117, 242, 0.2);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    button[type="submit"] {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 18px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: var(--neutral-dark);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 40px;
+    }
+
+    .free-estimate {
+      background: var(--accent);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    /* Animações */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2em; }
+      header p { font-size: 1.1em; }
+      section { padding: 20px; margin-bottom: 30px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .modal-content { margin: 20% auto; width: 95%; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      header { padding: 30px 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>NW Cleaning Services</h1>
+      <p>Professional House Cleaning</p>
+    </header>
+
+    <section id="services">
+      <h2>Our Services</h2>
+      <div class="free-estimate">Free Estimate - Contact Us Today!</div>
+      
+      <ul class="services-grid">
+        <li class="service-item" onclick="openModal('regular')">
+          <h3>Regular Cleaning</h3>
+          <p>Weekly or bi-weekly cleaning to keep your home spotless.</p>
+        </li>
+        <li class="service-item" onclick="openModal('deep')">
+          <h3>Deep Cleaning</h3>
+          <p>Thorough cleaning of all areas including baseboards and appliances.</p>
+        </li>
+        <li class="service-item" onclick="openModal('move')">
+          <h3>Move In/Move Out</h3>
+          <p>Complete cleaning for your new home or when moving out.</p>
+        </li>
+        <li class="service-item" onclick="openModal('airbnb')">
+          <h3>Airbnb</h3>
+          <p>Fast turnaround cleaning for rental properties and vacation homes.</p>
+        </li>
+        <li class="service-item" onclick="openModal('construction')">
+          <h3>Post Construction</h3>
+          <p>Heavy-duty cleaning after renovations or construction work.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Get Your Free Estimate</h2>
+      <form id="contactForm" novalidate>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required 
+                 placeholder="Enter your full name">
+        </div>
+        
+        <div>
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" required 
+                 placeholder="(123) 456-7890" pattern="[0-9]{3}[-\s]?[0-9]{3}[-\s]?[0-9]{4}">
+        </div>
+        
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required 
+                 placeholder="your@email.com">
+        </div>
+        
+        <div>
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" required 
+                    placeholder="Tell us about your cleaning needs..."></textarea>
+        </div>
+        
+        <div class="checkbox-group">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">I agree to receive messages and updates from NW Cleaning Services.</label>
+        </div>
+        
+        <button type="submit">Get Free Estimate</button>
+      </form>
+    </section>
+
+    <footer>
+      <p><strong>Nadjla Oliveira</strong><br>
+         Phone: <a href="tel:+16824591822" style="color: var(--accent); text-decoration: none;">(682) 459-1822</a><br>
+         Email: <a href="mailto:nwcleaningservices2024@gmail.com" style="color: var(--accent); text-decoration: none;">nwcleaningservices2024@gmail.com</a></p>
+      <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">&copy; 2024 NW Cleaning Services. Professional House Cleaning.</p>
+    </footer>
+  </div>
+
+  <!-- Modais de detalhes dos serviços -->
+  <div id="serviceModal" class="modal">
+    <div class="modal-content">
+      <button class="close" onclick="closeModal()">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(service) {
+      const modal = document.getElementById('serviceModal');
+      const modalBody = document.getElementById('modalBody');
+      
+      const details = {
+        regular: {
+          title: 'Regular Cleaning',
+          desc: 'Our regular cleaning service keeps your home consistently clean and fresh. Perfect for weekly or bi-weekly maintenance. We clean all living areas, kitchen, bathrooms, and bedrooms with attention to detail.',
+          features: ['Dust all surfaces', 'Vacuum carpets & floors', 'Clean bathrooms', 'Kitchen surfaces & appliances']
+        },
+        deep: {
+          title: 'Deep Cleaning',
+          desc: 'Comprehensive cleaning that reaches every corner. Ideal for seasonal deep cleans or when you need extra attention to detail.',
+          features: ['Baseboards & door frames', 'Inside cabinets & drawers', 'Window sills & blinds', 'Light fixtures']
+        },
+        move: {
+          title: 'Move In/Move Out',
+          desc: 'Get your home rental-ready or prepare for your new home. We handle all the heavy lifting so you don\'t have to.',
+          features: ['Oven & refrigerator cleaning', 'Walls & baseboards', 'Cabinets inside & out', 'Complete bathroom sanitation']
+        },
+        airbnb: {
+          title: 'Airbnb & Short-term Rental',
+          desc: 'Fast, thorough cleaning with quick turnaround times. Keep your guests happy and your 5-star reviews coming.',
+          features: ['Fresh linens & towels', 'Complete bathroom reset', 'Kitchen deep clean', 'Trash removal & restock']
+        },
+        construction: {
+          title: 'Post Construction Cleaning',
+          desc: 'Heavy-duty cleaning after renovations. We remove construction dust and debris so you can enjoy your newly renovated space.',
+          features: ['Dust removal from all surfaces', 'Floor scrubbing', 'Cabinet & fixture cleaning', 'Final walkthrough ready']
+        }
+      };
+
+      const serviceData = details[service];
+      modalBody.innerHTML = `
+        <h2 style="color: var(--secondary); margin-bottom: 20px;">${serviceData.title}</h2>
+        <p style="font-size: 1.1em; margin-bottom: 25px; line-height: 1.7;">${serviceData.desc}</p>
+        <h3 style="color: var(--accent); margin-bottom: 15px;">What\'s Included:</h3>
+        <ul style="line-height: 2; font-size: 1.05em;">
+          ${serviceData.features.map(f => `<li>✅ ${f}</li>`).join('')}
+        </ul>
+        <div style="margin-top: 25px; text-align: center;">
+          <button onclick="closeModal()" style="background: var(--accent); padding: 12px 30px; border: none; border-radius: 25px; color: white; font-size: 1.1em; cursor: pointer;">Close</button>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('serviceModal').style.display = 'none';
+    }
+
+    // Fechar modal clicando fora
+    window.onclick = function(event) {
+      const modal = document.getElementById('serviceModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Validação e envio do formulário
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simular envio bem-sucedido
+      alert('Thank you! Your request has been sent. Nadjla will contact you soon for your free estimate.');
+      this.reset();
+    });
+
+    // Fechar modal com ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
